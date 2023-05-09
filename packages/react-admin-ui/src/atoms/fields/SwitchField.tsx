@@ -64,42 +64,44 @@ export function SwitchField({ className, onChange, ...props }: SwitchFieldProps)
         return convertValue(defaultValue);
     }, [defaultValue]);
     return (
-        <Controller
-            name={name}
-            control={control}
-            defaultValue={transformedDefaultValue}
-            rules={{ required }}
-            render={() => {
-                return (
-                    <Div mt={'sm'} className={classes?.root}>
-                        <MuiSwitch
-                            checked={defaultValue}
-                            classes={{
-                                root: muiClasses.root,
-                                switchBase: muiClasses.switchBase,
-                                thumb: muiClasses.thumb,
-                                track: muiClasses.track,
-                                checked: muiClasses.checked,
-                                disabled: muiClasses.disabled,
-                                ...classes?.switch,
-                            }}
-                            disabled={disabled}
-                            disableRipple
-                            focusVisibleClassName={muiClasses.focusVisible}
-                            name={name}
-                            onChange={onChange}
-                            required={required}
-                            {...register()}
-                            {...extra}
-                            className={className}
-                        />
-                        <FieldLabel name={name} label={label} options={options} className={classes?.label} />
-                        <FieldError error={error} className={classes?.error} />
-                        <FieldHelper helper={helper} className={classes?.helper} />
-                    </Div>
-                );
-            }}
-        />
+        <Div mt={'sm'} className={classes?.root}>
+            <Controller
+                name={name}
+                control={control}
+                defaultValue={transformedDefaultValue}
+                rules={{ required }}
+                render={(props : any) => {
+                    // const v = convertValue((props.field || {}).value);
+
+                    return (
+                            <MuiSwitch
+                                classes={{
+                                    root: muiClasses.root,
+                                    switchBase: muiClasses.switchBase,
+                                    thumb: muiClasses.thumb,
+                                    track: muiClasses.track,
+                                    checked: muiClasses.checked,
+                                    disabled: muiClasses.disabled,
+                                    ...classes?.switch,
+                                }}
+                                disabled={disabled}
+                                disableRipple
+                                focusVisibleClassName={muiClasses.focusVisible}
+                                name={name}
+                                onChange={(e: any) => props.field.onChange({target: e})}
+                                required={required}
+                                {...register()}
+                                {...extra}
+                                className={className}
+                            />
+                            
+                    );
+                }}
+            />
+            <FieldLabel name={name} label={label} options={options} className={classes?.label} />
+            <FieldError error={error} className={classes?.error} />
+            <FieldHelper helper={helper} className={classes?.helper} />
+        </Div>
     );
 }
 

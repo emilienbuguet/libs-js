@@ -1,6 +1,7 @@
+import React from 'react';
 import { args, s, a } from '../../utils';
 import { SwitchField } from '../../../src';
-import { useForm } from 'react-hook-form';
+import { useForm } from '../../../src/hooks/useForm';
 
 export default {
     title: 'Atoms/fields/SwitchField',
@@ -20,10 +21,14 @@ export default {
     }),
 };
 
-const Template = (args) => {
-    const { control } = useForm();
-    const defaultValues = { checked: false };
-    return <SwitchField control={control} defaultValues={defaultValues} {...args} />;
+const Template = () => {
+    const defaultValues = { myfield: false };
+    const { field, Form, SubmitButton} = useForm({defaultValues, onSubmit: (data: any) => {alert(JSON.stringify(data, null, 4))}});
+    return (
+    <Form>
+        <SwitchField kind={'myfield'} {...field}/>
+        <SubmitButton/>
+    </Form>);
 };
 
 export const basic = s(Template, {});
